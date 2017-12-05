@@ -1,4 +1,7 @@
-#欠損値のあるデータは削除し、書き出し
+#元データの欠損値(?)をnull(NaN)に変更
+#モデルの作成を円滑にするために下記の項目を変更
+#欠損値のあるデータの削除
+#文字列が含まれる列の削除
 
 import pandas as pd
 import numpy as np
@@ -19,7 +22,13 @@ df = df.replace("?", np.NaN)
 df = df.dropna()
 
 #欠損データの個数
-print(df.isnull().sum())
+# print(df.isnull().sum())
+
+#文字列の含まれる列を削除
+drop_col = ["make", "fuel-type", "aspiration", "num-of-doors", "body-style", "drive-wheels", "engine-location", "engine-type", "num-of-cylinders", "fuel-system"]
+df = df.drop(drop_col, axis=1)
+
+print(df)
 
 #csvに書き出し
 df.to_csv("datasets.csv")
