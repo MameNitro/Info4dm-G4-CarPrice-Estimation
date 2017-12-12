@@ -2,7 +2,8 @@
 import numpy as np
 import pandas as pd
 from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
+# from sklearn.metrics import mean_squared_log_error
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 # Load the Autemobile dataset
 Autemobile = pd.read_csv('datasets.csv')
@@ -28,12 +29,25 @@ Autemobile_y_pred = regr.predict(Autemobile_X_test)
 
 # The coefficients 係数？
 print('Coefficients: \n', regr.coef_)
-# The mean squared error 平均二乗誤差
-print("Mean squared error: %.2f"
-      % mean_squared_error(Autemobile_y_test, Autemobile_y_pred))
+
 # Explained variance score: 1 is perfect prediction
 # 分散スコア→１なら完全予測
 print('Variance score: %.2f' % r2_score(Autemobile_y_test, Autemobile_y_pred))
+
+# The mean absolute error
+# 平均絶対誤差
+print('Mean Absolute error: %.2f' 
+      % mean_absolute_error(Autemobile_y_test, Autemobile_y_pred))
+
+# The mean squared error 
+# 平均二乗誤差
+print("Mean squared error: %.2f"
+      % mean_squared_error(Autemobile_y_test, Autemobile_y_pred))
+
+# The mean squared logarithmic error
+# 平均二乗対数誤差
+# print("Mean squared logarithmic error: %.2f" 
+#       % mean_squared_log_error(Autemobile_y_test, Autemobile_y_pred))
 
 print(Autemobile_y_pred)
 print(Autemobile_y_test)
