@@ -6,7 +6,7 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 # Load the Automobile dataset
-Automobile = pd.read_csv('datasets2.csv')
+Automobile = pd.read_csv('datasets.csv')
 Automobile_X = Automobile.drop("price",axis=1)
 
 AllAbsoluteError = []
@@ -14,7 +14,7 @@ AllAbsoluteError = []
 for i in range(len(Automobile_X)):
     
     # Load the Automobile dataset
-    Automobile = pd.read_csv('datasets2.csv')
+    Automobile = pd.read_csv('datasets.csv')
     Automobile_X = Automobile.drop("price",axis=1)
 
     Automobile_y_test = Automobile.price.drop(i)
@@ -56,7 +56,7 @@ for i in range(len(Automobile_X)):
 # for n in range(len(AllAbsoluteError)) :
 #     print(AllAbsoluteError[n])
 
-print(sum(AllAbsoluteError))
+print(sum(AllAbsoluteError)/len(AllAbsoluteError))
 # The mean squared logarithmic error
 # 平均二乗対数誤差
 # print("Mean squared logarithmic error: %.2f" 
