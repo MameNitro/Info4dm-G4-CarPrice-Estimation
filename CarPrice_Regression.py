@@ -5,35 +5,32 @@ from sklearn import linear_model
 # from sklearn.metrics import mean_squared_log_error
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
-# Load the Automobile dataset
+#データセットの読み込み 
 Automobile = pd.read_csv('datasets.csv')
 Automobile_X = Automobile.drop("price",axis=1)
 
+#最終誤差値用の結果を格納する配列を用意
 AllAbsoluteError = []
+AllSquaredError = []
 
 for i in range(len(Automobile_X)):
     
-    # Load the Automobile dataset
-    Automobile = pd.read_csv('datasets.csv')
-    Automobile_X = Automobile.drop("price",axis=1)
+    #テスト用データを１行だけ指定
+    Automobile_X_test = Automobile_X[i:i+1]
+    Automobile_Y_test = Automobile.price[i:i+1]
 
-    Automobile_y_test = Automobile.price.drop(i)
-    Automobile_X_test = Automobile_X.drop(i)
-
-    # 学習に使うデータ行とテストに使うデータ行を指定
-    Automobile_y_train = Automobile.price
-    Automobile_X_train = Automobile_X
-
-    # 学習に使うターゲット行とテストに使うターゲット行を指定
+    #テストデータとして指定した１行を除いた他の行を学習データとして指定
+    Automobile_X_train = Automobile_X.drop(i)
+    Automobile_Y_train = Automobile.price.drop(i)
 
     # 線形モデルを作成
     regr = linear_model.LinearRegression()
 
     # †学習†
-    regr.fit(Automobile_X_train, Automobile_y_train)
+    regr.fit(Automobile_X_train, Automobile_Y_train)
 
     # テストデータで予測を作成
-    Automobile_y_pred = regr.predict(Automobile_X_test)
+    Automobile_Y_pred = regr.predict(Automobile_X_test)
 
     # The coefficients 係数？
     # print('Coefficients: \n', regr.coef_)
@@ -46,9 +43,9 @@ for i in range(len(Automobile_X)):
     # 平均絶対誤差
     # print('Mean Absolute error: %.2f' 
     #      % mean_absolute_error(Automobile_y_test, Automobile_y_pred))
-    AllAbsoluteError.append(mean_absolute_error(Automobile_y_test, Automobile_y_pred))
+    AllAbsoluteError.append(mean_absolute_error(Automobile_Y_test, Automobile_Y_pred))
 
-
+    AllSquaredError.append(np.sqrt(mean_squared_error(Automobile_Y_test, Automobile_Y_pred)))
     # The mean squared error 
     # 平均二乗誤差
     # print("Mean squared error: %.2f"
@@ -56,7 +53,8 @@ for i in range(len(Automobile_X)):
 # for n in range(len(AllAbsoluteError)) :
 #     print(AllAbsoluteError[n])
 
-print(sum(AllAbsoluteError)/len(AllAbsoluteError))
+print('AbsoluteError => {}'.format(sum(AllAbsoluteError)/len(AllAbsoluteError)))
+print('AquaredError  => {}'.format(sum(AllSquaredError)/len(AllSquaredError)))
 # The mean squared logarithmic error
 # 平均二乗対数誤差
 # print("Mean squared logarithmic error: %.2f" 
