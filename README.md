@@ -1,6 +1,17 @@
 CarPriceEstimation
 ===
 
+## Description
+
+概要
+
+## Requirements
+
+- python3
+- scikit-learn
+- pandas
+- numpy
+
 ## Overview
 
 - 
