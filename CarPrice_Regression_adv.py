@@ -11,7 +11,13 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 #データセットの読み込み 
 Automobile = pd.read_csv('datasets4.csv')
+del Automobile['Unnamed: 0']
 Automobile_X_origin = Automobile.drop("price",axis=1)
+
+MAX_AllAbsoluteError = 0
+MIN_AllAbsoluteError = 1000000000000000000000
+MAX_NAME = None
+MIN_NAME = None
 
 for j in range(len(Automobile_X_origin.columns)):
 
@@ -66,6 +72,17 @@ for j in range(len(Automobile_X_origin.columns)):
 
     print('AbsoluteError => {}'.format(sum(AllAbsoluteError)/len(AllAbsoluteError)))
     print('AquaredError  => {}'.format(sum(AllSquaredError)/len(AllSquaredError)))
+
+    if MAX_AllAbsoluteError < (sum(AllAbsoluteError)/len(AllAbsoluteError)):
+        MAX_AllAbsoluteError = (sum(AllAbsoluteError)/len(AllAbsoluteError))
+        MAX_NAME = j
+
+    if MIN_AllAbsoluteError > (sum(AllAbsoluteError)/len(AllAbsoluteError)):
+        MIN_AllAbsoluteError = (sum(AllAbsoluteError)/len(AllAbsoluteError))
+        MIN_NAME = j
+
+print('MAX AbsoluteError = {0} {1}'.format(MAX_AllAbsoluteError, Automobile_X_origin.columns[MAX_NAME]))
+print('MIN AbsoluteError = {0} {1}'.format(MIN_AllAbsoluteError, Automobile_X_origin.columns[MIN_NAME]))
 # The mean squared logarithmic error
 # 平均二乗対数誤差
 # print("Mean squared logarithmic error: %.2f" 
