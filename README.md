@@ -3,7 +3,7 @@ CarPriceEstimation
 
 ## Description
 
-概要
+車両データから車両価格の測定を行う。
 
 ## Requirements
 
@@ -14,10 +14,15 @@ CarPriceEstimation
 
 ## Overview
 
-- 
-- 
-- 
-- 
+- Automobile price data _Raw_.csv  
+元データセット
+- CarPrice_Regression.py  
+- CarPrice_Regression_adv.py  
+- CarPrice_Regression_origin.py  
+- Missing_values_​​complement.py  
+欠損値の補完
+- dataset.py  
+データセットの処理
 
 ## Installation
 
