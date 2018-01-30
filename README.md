@@ -22,7 +22,7 @@ CarPriceEstimation
 - Missing_values_​​complement.py  
 欠損値の補完
 - dataset.py  
-データセットの処理
+データセットの処理
 
 ## Installation
 
