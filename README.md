@@ -3,7 +3,7 @@ CarPriceEstimation
 
 ## Description
 
-車両データから車両価格の測定を行う。
+車両データから車両価格の測定を行う。
 
 ## Requirements
 
