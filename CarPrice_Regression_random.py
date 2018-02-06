@@ -6,10 +6,11 @@
 import numpy as np
 import pandas as pd
 from sklearn import linear_model
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 #データセットの読み込み 
-Automobile = pd.read_csv('datasets4.csv')
+Automobile = pd.read_csv('datasets2.csv')
 del Automobile['Unnamed: 0']
 Automobile_X = Automobile.drop("price",axis=1)
 
@@ -29,7 +30,7 @@ for i in range(len(Automobile_X)):
     Automobile_Y_train = Automobile.price.drop(i)
 
     # 線形モデルを作成
-    regr = linear_model.LinearRegression()
+    regr = RandomForestClassifier()
 
     # †学習†
     regr.fit(Automobile_X_train, Automobile_Y_train)

@@ -2,16 +2,21 @@
 # 不要列の捜索，評価用
 # １行ずつ見ない場合の誤差値を各々出す
 #
-# import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn import linear_model
-# from sklearn.metrics import mean_squared_log_error
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 #データセットの読み込み 
 Automobile = pd.read_csv('datasets4.csv')
+del Automobile['Unnamed: 0']
 Automobile_X_origin = Automobile.drop("price",axis=1)
+
+# 最大値，最小値を返すための変数の初期化
+MAX_AllAbsoluteError = 0
+MIN_AllAbsoluteError = 1145141919810
+MAX_NAME = None
+MIN_NAME = None
 
 for j in range(len(Automobile_X_origin.columns)):
 
@@ -24,6 +29,7 @@ for j in range(len(Automobile_X_origin.columns)):
     print('###Deleted Columns NAME => "{}"'.format(Automobile_X_origin.columns[j]))
     Automobile_X = Automobile_X_origin.drop(Automobile_X_origin.columns[j], axis=1)
 
+    # クロスバリデーション（確認交差法）
     for i in range(len(Automobile_X)):
         
         #テスト用データを１行だけ指定
@@ -43,44 +49,25 @@ for j in range(len(Automobile_X_origin.columns)):
         # テストデータで予測を作成
         Automobile_Y_pred = regr.predict(Automobile_X_test)
 
-        # The coefficients 係数？
-        # print('Coefficients: \n', regr.coef_)
-
-        # Explained variance score: 1 is perfect prediction
-        # 分散スコア→１なら完全予測
-        # print('Variance score: %.2f' % r2_score(Automobile_y_test, Automobile_y_pred))
-
-        # The mean absolute error
         # 平均絶対誤差
-        # print('Mean Absolute error: %.2f' 
-        #      % mean_absolute_error(Automobile_y_test, Automobile_y_pred))
         AllAbsoluteError.append(mean_absolute_error(Automobile_Y_test, Automobile_Y_pred))
-
-        AllSquaredError.append(np.sqrt(mean_squared_error(Automobile_Y_test, Automobile_Y_pred)))
-        # The mean squared error 
         # 平均二乗誤差
-        # print("Mean squared error: %.2f"
-        #      % mean_squared_error(Automobile_y_test, Automobile_y_pred))
-    # for n in range(len(AllAbsoluteError)) :
-    #     print(AllAbsoluteError[n])
+        AllSquaredError.append(np.sqrt(mean_squared_error(Automobile_Y_test, Automobile_Y_pred)))
 
+    # 平均絶対誤差および平均二乗誤差を表示
     print('AbsoluteError => {}'.format(sum(AllAbsoluteError)/len(AllAbsoluteError)))
     print('AquaredError  => {}'.format(sum(AllSquaredError)/len(AllSquaredError)))
-# The mean squared logarithmic error
-# 平均二乗対数誤差
-# print("Mean squared logarithmic error: %.2f" 
-#       % mean_squared_log_error(Automobile_y_test, Automobile_y_pred))
 
-# print(Automobile_y_pred)
-# print(Automobile_y_test)
-# print(Automobile_y_test - Automobile_y_pred)
+    # 最大値を格納
+    if MAX_AllAbsoluteError < (sum(AllAbsoluteError)/len(AllAbsoluteError)):
+        MAX_AllAbsoluteError = (sum(AllAbsoluteError)/len(AllAbsoluteError))
+        MAX_NAME = j
 
-# Plot outputs
-# グラフに描画するゾーン．削除可
-# plt.scatter(Automobile_X_test, Automobile_y_test,  color='black')
-# plt.plot(Automobile_X_test, Automobile_y_pred, color='blue', linewidth=3)
+    # 最小値を格納
+    if MIN_AllAbsoluteError > (sum(AllAbsoluteError)/len(AllAbsoluteError)):
+        MIN_AllAbsoluteError = (sum(AllAbsoluteError)/len(AllAbsoluteError))
+        MIN_NAME = j
 
-# plt.xticks(())
-# plt.yticks(())
-
-# plt.show()
+# 最大値と最小値だったカラムを表示
+print('MAX AbsoluteError = {0} {1}'.format(MAX_AllAbsoluteError, Automobile_X_origin.columns[MAX_NAME]))
+print('MIN AbsoluteError = {0} {1}'.format(MIN_AllAbsoluteError, Automobile_X_origin.columns[MIN_NAME]))
