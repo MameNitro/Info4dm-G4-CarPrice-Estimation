@@ -1,25 +1,18 @@
+#datasets.pyでの処理に加えて下記の処理を行なっている
 #属性normalized-lossesの欠損値を補完するプログラム(他の欠損値の補完は未実装)
-#文字列データはダミーコーディングによって数値化
 
 import pandas as pd
 import numpy as np
 from sklearn import datasets, linear_model
 
-#データセット読み込み(?をNaN(null)に置換)
+#元データ読み込み
 df = pd.read_csv("Automobile price data _Raw_.csv").replace("?", np.NaN)
-
-#ダミーコーディング
-dummy_df = pd.get_dummies(df[["make", "fuel-type", "aspiration", "num-of-doors", "body-style", "drive-wheels", "engine-location", "engine-type", "num-of-cylinders", "fuel-system"]])
-
-#dfの連結
-df = pd.concat((df, dummy_df), axis=1)
 
 #文字列の含まれる列を削除
 drop_col = ["make", "fuel-type", "aspiration", "num-of-doors", "body-style", "drive-wheels", "engine-location", "engine-type", "num-of-cylinders", "fuel-system"]
 df = df.drop(drop_col, axis=1)
 
 #推定したい欠損値(normalized-losses)以外の欠損を含むデータ(行)を削除
-#"num-of-doors", 
 df = df.dropna(subset=["bore", "horsepower", "peak-rpm", "price"])
 
 #推定したい属性(normalized-losses)のデータフレーム作成
@@ -53,4 +46,4 @@ for m,n in zip(index_number,df_Y_pred):
     df.at[m, "normalized-losses"] = n
 
 #csvに書き出し
-df.to_csv("datasets4.csv")
+df.to_csv("datasets3.csv")

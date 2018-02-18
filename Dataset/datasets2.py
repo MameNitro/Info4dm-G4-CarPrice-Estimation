@@ -1,4 +1,4 @@
-#モデルの作成を円滑にするために本データを下記の項目に変更
+#モデルの作成を円滑にするために元データを下記の項目に変更
 #元データの欠損値(?)をnull(NaN)に変更
 #欠損値のあるデータの削除
 #文字列データをダミーコーディングによって数値化
@@ -6,11 +6,11 @@
 import pandas as pd
 import numpy as np
 
-#本データ読み込み
+#元データ読み込み
 df = pd.read_csv('Automobile price data _Raw_.csv').replace("?", np.NaN)
 
 #欠損データの個数
-print(df.isnull().sum())
+# print(df.isnull().sum())
 
 #欠損値を含む行を削除
 df = df.dropna()
