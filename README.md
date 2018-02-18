@@ -14,28 +14,22 @@ CarPriceEstimation
 
 ## Overview
 
-- Automobile price data _Raw_.csv  
+- `Automobile price data _Raw_.csv`  
 元データセット
-- CarPrice_Regression.py  
-- CarPrice_Regression_adv.py  
-- CarPrice_Regression_origin.py  
-- Missing_values_​​complement.py  
-欠損値の補完
-- dataset.py  
-データセットの処理
+[Azure Machine Learning Studio](https://azure.microsoft.com/ja-jp/services/machine-learning-studio/)にアカウント登録するとサンプルデータとして使用可能
+- `CarPrice_Regression.py`  
+- `CarPrice_Regression_adv.py`  
+- `CarPrice_Regression_origin.py`  
+- `Dataset/`
+├`datasets.py`
+├`datasets2.py`
+├`datasets3.py`
+├`datasets4.py`
+データセットの前処理を段階的に行なっている
+
 
 ## Installation
 
     $ git clone https://github.com/MameNitro/Info4dm-G4-CarPrice-Estimation.git
 
 ## Usage
-
-
-## Memo
-
-For DataMining Class, group 4
-
-test commit by mamenitro
-mamenitro maked branch.
-linke github and slack by mamenitro.
-test
